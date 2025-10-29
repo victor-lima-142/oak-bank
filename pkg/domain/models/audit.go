@@ -4,7 +4,9 @@ import (
 	"database/sql"
 	"time"
 
+	"github.com/google/uuid"
 	"gorm.io/datatypes"
+	"gorm.io/gorm"
 )
 
 // ===========================
@@ -34,4 +36,11 @@ type AuditLog struct {
 
 func (AuditLog) TableName() string {
 	return "audit_log"
+}
+
+func (al *AuditLog) BeforeCreate(tx *gorm.DB) error {
+	if al.AuditID == "" {
+		al.AuditID = uuid.New().String()
+	}
+	return nil
 }

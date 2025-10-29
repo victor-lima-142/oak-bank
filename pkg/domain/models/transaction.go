@@ -58,13 +58,6 @@ type RefTransactionType struct {
 	Transactions []Transaction `gorm:"foreignKey:TransactionTypeCode" json:"transactions,omitempty"`
 }
 
-func (al *AuditLog) BeforeCreate(tx *gorm.DB) error {
-	if al.AuditID == "" {
-		al.AuditID = uuid.New().String()
-	}
-	return nil
-}
-
 func (RefTransactionType) TableName() string {
 	return "ref_transaction_types"
 }
